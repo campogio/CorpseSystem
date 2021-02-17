@@ -394,6 +394,15 @@ namespace WiredPlayers.messages.commands {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to examine.
+        /// </summary>
+        public static string examine {
+            get {
+                return ResourceManager.GetString("examine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to extract.
         /// </summary>
         public static string extract {

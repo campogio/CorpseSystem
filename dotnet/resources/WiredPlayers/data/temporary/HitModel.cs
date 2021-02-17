@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WiredPlayers.data.temporary
 {
-    class HitModel
+    public class HitModel
     {
         public ulong Weaponhash;
         public ulong Boneidx;

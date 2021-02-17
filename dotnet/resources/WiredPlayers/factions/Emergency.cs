@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using WiredPlayers.Buildings;
 using WiredPlayers.character;
+using WiredPlayers.data.temporary;
 using WiredPlayers.Data.Persistent;
 using WiredPlayers.Data.Temporary;
 using WiredPlayers.messages.information;
@@ -14,6 +15,7 @@ namespace WiredPlayers.factions
     public class Emergency : Script
     {
         public static List<BloodModel> BloodList;
+        public static List<CorpseModel> CorpseList= new List<CorpseModel>();
 
         private void CreateEmergencyReport(DeathModel death)
         {

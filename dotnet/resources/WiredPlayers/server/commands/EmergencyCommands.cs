@@ -18,6 +18,8 @@ namespace WiredPlayers.Server.Commands
 {
     public static class EmergencyCommands
     {
+
+
         [Command]
         public static void HealCommand(Player player, string targetString)
         {
@@ -182,8 +184,9 @@ namespace WiredPlayers.Server.Commands
             player.SendChatMessage(Constants.COLOR_INFO + string.Format(InfoRes.blood_extracted, target.Name));
             target.SendChatMessage(Constants.COLOR_INFO + string.Format(InfoRes.blood_given, player.Name));
         }
+        
 
-        [Command]
+            [Command]
         public static void DieCommand(Player player)
         {
             try
@@ -220,9 +223,10 @@ namespace WiredPlayers.Server.Commands
 
                 CorpseModel corpse = new CorpseModel(hitList, corpsePos, corpseRot, player.Name);
 
-                player.SendChatMessage($"{corpse.deathTime}");
+                Emergency.CorpseList.Add(corpse);
 
 
+                
                 
 
 
@@ -260,6 +264,12 @@ namespace WiredPlayers.Server.Commands
                 NAPI.Util.ConsoleOutput(e.StackTrace);
             }
             
+        }
+
+        [Command]
+        public static void ExamineCommand(Player player)
+        {
+            player.SendChatMessage("examine command used.");
         }
     }
 }

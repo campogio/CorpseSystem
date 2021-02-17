@@ -528,4 +528,7 @@
   <data name="interior" xml:space="preserve">
     <value>interior</value>
   </data>
+  <data name="examine" xml:space="preserve">
+    <value>examine</value>
+  </data>
 </root>
