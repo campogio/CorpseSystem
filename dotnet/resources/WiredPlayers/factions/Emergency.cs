@@ -161,5 +161,18 @@ namespace WiredPlayers.factions
             // Set the player into dead state
             player.TriggerEvent("togglePlayerDead", true);
         }
+
+        [RemoteEvent("AddToHitList")]
+
+        public static void AddToHitListEvent(Player sourcePlayer, Entity sourceEntity, Entity targetEntity, ulong weaponHash, ulong boneIdx, int damage)
+        {
+
+            // Create hitmodel from recieved hit TODO:translateboneidx to actual bone name
+            HitModel hit = new HitModel(weaponHash,boneIdx,damage,"TestString");
+
+            // Add hit to player's hitlist
+            sourcePlayer.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).HitList.Add(hit);
+        }
+
     }
 }

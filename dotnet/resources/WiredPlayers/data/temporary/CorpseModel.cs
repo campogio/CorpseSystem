@@ -9,7 +9,6 @@ namespace WiredPlayers.data.temporary
 {
     public class CorpseModel
     {
-        public CorpseModel thisModel { get; set; }
         public List<HitModel> HitList { get; set; }
         public Vector3 Location { get; set; }
         public Vector3 Rotation { get; set; }
@@ -21,7 +20,6 @@ namespace WiredPlayers.data.temporary
 
         public CorpseModel(List<HitModel> hitList,Vector3 location,Vector3 rotation,String name) 
         {
-            thisModel = this;
             HitList = hitList;
             Location = location;
             Rotation = rotation;
@@ -29,7 +27,7 @@ namespace WiredPlayers.data.temporary
             Model = NAPI.Object.CreateObject(1165866977, location, rotation);
             DeathTime = DateTime.Now;
             DestroyTime = new Timer(DestroyCorpse, null, 30000, 30000);
-
+            Emergency.CorpseList.Add(this);
         }
 
         private void DestroyCorpse(object state)

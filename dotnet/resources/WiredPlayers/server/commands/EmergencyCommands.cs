@@ -223,9 +223,6 @@ namespace WiredPlayers.Server.Commands
 
                 CorpseModel corpse = new CorpseModel(hitList, corpsePos, corpseRot, player.Name);
 
-                Emergency.CorpseList.Add(corpse);
-
-
                 
                 
 
@@ -269,7 +266,19 @@ namespace WiredPlayers.Server.Commands
         [Command]
         public static void ExamineCommand(Player player)
         {
-            player.SendChatMessage("examine command used.");
+            foreach(CorpseModel corpse in Emergency.CorpseList)
+            {
+                if (player.Position.DistanceToSquared2D(corpse.Location)<5)
+                {
+                    player.SendChatMessage(corpse.Name);
+                    player.SendChatMessage($"{corpse.HitList.Count}");
+
+                    foreach (HitModel hit in corpse.HitList)
+                    {
+                        player.SendChatMessage($"Danno : {hit.Damage} |Arma : {hit.Weaponhash} |Bone : {hit.Boneidx}");
+                    }
+                }
+            }
         }
     }
 }
