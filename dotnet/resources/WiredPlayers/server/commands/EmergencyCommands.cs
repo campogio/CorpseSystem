@@ -223,25 +223,12 @@ namespace WiredPlayers.Server.Commands
 
                 CorpseModel corpse = new CorpseModel(player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).HitList, corpsePos, corpseRot, player.Name);
 
+                // Add new corpse to list of corpses
+
                 Emergency.CorpseList.Add(corpse);
-
-                foreach (HitModel hit in corpse.HitList)
-                {
-                    player.SendChatMessage($"Danno : {hit.Damage} |Arma : {hit.Weaponhash} |Bone : {hit.Boneidx}");
-                }
-
-
-
-
-
 
                 // clear the player's hitlist
                 player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).HitList.Clear();
-
-
-
-
-
 
                 // Move player to the hospital
                 Emergency.TeleportPlayerToHospital(player);

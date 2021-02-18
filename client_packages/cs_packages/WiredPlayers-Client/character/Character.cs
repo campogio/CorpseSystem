@@ -49,19 +49,16 @@ namespace WiredPlayers_Client.character
                 if (targetEntity is Player player)
                 {
 
-                    RAGE.Ui.Console.Log(ConsoleVerbosity.Info, "test", true);
 
                     Events.CallRemote("onPlayerDamage", sourcePlayer.RemoteId, sourceEntity.RemoteId, damage, boneIdx,weaponHash);
+
+                    // pass shot taken to player hitlist
                     Events.CallRemote("AddToHitList",weaponHash,boneIdx,damage);
 
                     player.PlayPain(6, 0, 0);
 
                     if (weaponHash == 911657153)
                     player.SetToRagdoll(5000, 5000, 0, true, true, true);
-                }
-                else
-                {
-                    Events.CallRemote("TestingEvent");
                 }
             }
             catch (Exception e)
@@ -70,7 +67,6 @@ namespace WiredPlayers_Client.character
             }
 
 
-            //   Events.CallRemote("AddToHitList", sourcePlayer, sourceEntity, targetEntity, weaponHash, boneIdx, damage);
 
         }
 

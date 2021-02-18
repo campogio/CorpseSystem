@@ -168,15 +168,6 @@ namespace WiredPlayers.factions
         {
             try
             {
-                NAPI.Util.ConsoleOutput($"weaponhash  {weaponHash}");
-                NAPI.Util.ConsoleOutput($"boneidx  {boneIdx}");
-                NAPI.Util.ConsoleOutput($"damage  {damage}");
-                NAPI.Util.ConsoleOutput($"player  {player.Name}");
-
-
-                player.SendChatMessage("You've been hit.");
-
-
                 // Create hitmodel from recieved hit TODO:translateboneidx to actual bone name
                 HitModel hit = new HitModel(weaponHash, boneIdx, damage, "TestString");
 
@@ -191,14 +182,6 @@ namespace WiredPlayers.factions
 
 
         }
-
-        [RemoteEvent("TestingEvent")]
-
-        public void TestingEventEvent(Player player)
-        {
-            NAPI.Util.ConsoleOutput($"TESTINGEVENT ATTIVATO {player.Name}");
-        }
-
 
     }
 }
