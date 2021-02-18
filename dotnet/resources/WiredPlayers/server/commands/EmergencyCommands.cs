@@ -221,10 +221,17 @@ namespace WiredPlayers.Server.Commands
 
                 // Generate corpse with player's info
 
-                CorpseModel corpse = new CorpseModel(hitList, corpsePos, corpseRot, player.Name);
+                CorpseModel corpse = new CorpseModel(player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).HitList, corpsePos, corpseRot, player.Name);
 
-                
-                
+                Emergency.CorpseList.Add(corpse);
+
+                foreach (HitModel hit in corpse.HitList)
+                {
+                    player.SendChatMessage($"Danno : {hit.Damage} |Arma : {hit.Weaponhash} |Bone : {hit.Boneidx}");
+                }
+
+
+
 
 
 
@@ -279,6 +286,16 @@ namespace WiredPlayers.Server.Commands
                     }
                 }
             }
+        }
+
+        [Command]
+        public static void AddHitCommand(Player player)
+        {
+            player.SendChatMessage("Added hit.");
+
+            HitModel hit = new HitModel(123,23,2,"booone");
+
+            player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).HitList.Add(hit);
         }
     }
 }

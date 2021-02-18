@@ -10,6 +10,7 @@ using WiredPlayers_Client.chat;
 using WiredPlayers_Client.account;
 
 using static WiredPlayers.Client.Utility.Enumerators;
+using RAGE.Ui;
 
 namespace WiredPlayers_Client.character
 {
@@ -34,7 +35,43 @@ namespace WiredPlayers_Client.character
             Events.Add("characterNameDuplicated", CharacterNameDuplicatedEvent);
             Events.Add("acceptCharacterCreation", AcceptCharacterCreationEvent);
             Events.Add("cancelCharacterCreation", CancelCharacterCreationEvent);
-            Events.Add("characterCreatedSuccessfully", CharacterCreatedSuccessfullyEvent); 
+            Events.Add("characterCreatedSuccessfully", CharacterCreatedSuccessfullyEvent);
+
+            Events.OnIncomingDamage += OnIncomingDamageEvent;
+
+        }
+
+        private void OnIncomingDamageEvent(Player sourcePlayer, Entity sourceEntity, Entity targetEntity, ulong weaponHash, ulong boneIdx, int damage, Events.CancelEventArgs cancel)
+        {
+
+            try
+            {
+                if (targetEntity is Player player)
+                {
+
+                    RAGE.Ui.Console.Log(ConsoleVerbosity.Info, "test", true);
+
+                    Events.CallRemote("onPlayerDamage", sourcePlayer.RemoteId, sourceEntity.RemoteId, damage, boneIdx,weaponHash);
+                    Events.CallRemote("AddToHitList",weaponHash,boneIdx,damage);
+
+                    player.PlayPain(6, 0, 0);
+
+                    if (weaponHash == 911657153)
+                    player.SetToRagdoll(5000, 5000, 0, true, true, true);
+                }
+                else
+                {
+                    Events.CallRemote("TestingEvent");
+                }
+            }
+            catch (Exception e)
+            {
+                RAGE.Ui.Console.Log(ConsoleVerbosity.Info, e.StackTrace, true);
+            }
+
+
+            //   Events.CallRemote("AddToHitList", sourcePlayer, sourceEntity, targetEntity, weaponHash, boneIdx, damage);
+
         }
 
         private void ShowPlayerCharactersEvent(object[] args)

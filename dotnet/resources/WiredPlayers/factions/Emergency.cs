@@ -15,7 +15,7 @@ namespace WiredPlayers.factions
     public class Emergency : Script
     {
         public static List<BloodModel> BloodList;
-        public static List<CorpseModel> CorpseList= new List<CorpseModel>();
+        public static List<CorpseModel> CorpseList = new List<CorpseModel>();
 
         private void CreateEmergencyReport(DeathModel death)
         {
@@ -53,7 +53,7 @@ namespace WiredPlayers.factions
             foreach (BloodModel blood in BloodList)
             {
                 if (blood.Used) remaining--;
-                else  remaining++;
+                else remaining++;
             }
             return remaining;
         }
@@ -85,9 +85,9 @@ namespace WiredPlayers.factions
         }
 
         public static void TeleportPlayerToHospital(Player player)
-        {           
+        {
             NAPI.Player.SpawnPlayer(player, Coordinates.Hospital);
-            
+
             // Reset building variables
             BuildingHandler.RemovePlayerFromBuilding(player, Coordinates.Hospital, 0);
 
@@ -121,8 +121,8 @@ namespace WiredPlayers.factions
         [ServerEvent(Event.PlayerDeath)]
         public void PlayerDeathServerEvent(Player player, Player killer, uint weapon)
         {
-            if(IsPlayerDead(player)) return;
-            
+            if (IsPlayerDead(player)) return;
+
             DeathModel death = new DeathModel(player, killer, weapon);
 
             string deathPlace = string.Empty;
@@ -164,15 +164,41 @@ namespace WiredPlayers.factions
 
         [RemoteEvent("AddToHitList")]
 
-        public static void AddToHitListEvent(Player sourcePlayer, Entity sourceEntity, Entity targetEntity, ulong weaponHash, ulong boneIdx, int damage)
+        public void AddToHitListEvent(Player player, ulong weaponHash, ulong boneIdx, int damage)
         {
+            try
+            {
+                NAPI.Util.ConsoleOutput($"weaponhash  {weaponHash}");
+                NAPI.Util.ConsoleOutput($"boneidx  {boneIdx}");
+                NAPI.Util.ConsoleOutput($"damage  {damage}");
+                NAPI.Util.ConsoleOutput($"player  {player.Name}");
 
-            // Create hitmodel from recieved hit TODO:translateboneidx to actual bone name
-            HitModel hit = new HitModel(weaponHash,boneIdx,damage,"TestString");
 
-            // Add hit to player's hitlist
-            sourcePlayer.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).HitList.Add(hit);
+                player.SendChatMessage("You've been hit.");
+
+
+                // Create hitmodel from recieved hit TODO:translateboneidx to actual bone name
+                HitModel hit = new HitModel(weaponHash, boneIdx, damage, "TestString");
+
+                // Add hit to player's hitlist
+                player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).HitList.Add(hit);
+
+            }catch(Exception e)
+            {
+                NAPI.Util.ConsoleOutput(e.StackTrace);
+            }
+
+
+
         }
+
+        [RemoteEvent("TestingEvent")]
+
+        public void TestingEventEvent(Player player)
+        {
+            NAPI.Util.ConsoleOutput($"TESTINGEVENT ATTIVATO {player.Name}");
+        }
+
 
     }
 }

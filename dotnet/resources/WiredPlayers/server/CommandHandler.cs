@@ -109,6 +109,8 @@ namespace WiredPlayers.Server
             NAPI.Command.Register(Type.GetType(EMERGENCY_NAMESPACE).GetMethod("ExtractCommand"), GetGreedyCommand(ComRes.extract, HelpRes.extract));
             NAPI.Command.Register(Type.GetType(EMERGENCY_NAMESPACE).GetMethod("DieCommand"), new RuntimeCommandInfo(ComRes.die));
             NAPI.Command.Register(Type.GetType(EMERGENCY_NAMESPACE).GetMethod("ExamineCommand"), new RuntimeCommandInfo(ComRes.examine));
+            NAPI.Command.Register(Type.GetType(EMERGENCY_NAMESPACE).GetMethod("AddHitCommand"), new RuntimeCommandInfo(ComRes.addhit));
+
 
 
             // Faction.cs class

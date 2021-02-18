@@ -20,21 +20,35 @@ namespace WiredPlayers.data.temporary
 
         public CorpseModel(List<HitModel> hitList,Vector3 location,Vector3 rotation,String name) 
         {
-            HitList = hitList;
+            HitList = new List<HitModel>();
+            foreach(HitModel hit in hitList)
+            {
+                HitList.Add(hit);
+            }
             Location = location;
             Rotation = rotation;
             Name = name;
             Model = NAPI.Object.CreateObject(1165866977, location, rotation);
             DeathTime = DateTime.Now;
             DestroyTime = new Timer(DestroyCorpse, null, 30000, 30000);
-            Emergency.CorpseList.Add(this);
         }
+
+
 
         private void DestroyCorpse(object state)
         {
-            this.DestroyTime.Dispose();
-            this.Model.Delete();
-            Emergency.CorpseList.Remove(this);
+            try
+            {
+                NAPI.Task.Run(() =>
+                {
+                    this.Model.Delete();
+                });
+                this.DestroyTime.Dispose();
+                Emergency.CorpseList.Remove(this);
+            }catch(Exception e)
+            {
+                NAPI.Util.ConsoleOutput(e.StackTrace);
+            }
         }
     }
 }
