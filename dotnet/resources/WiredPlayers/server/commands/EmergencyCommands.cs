@@ -269,7 +269,7 @@ namespace WiredPlayers.Server.Commands
 
                     foreach (HitModel hit in corpse.HitList)
                     {
-                        player.SendChatMessage($"Danno : {hit.Damage} |Arma : {hit.Weaponhash} |Bone : {hit.Boneidx}");
+                        player.SendChatMessage($"Danno : {hit.Damage} |Arma : {hit.WeaponString} |BoneID : {hit.Boneidx} | BoneZone : {hit.BoneString}");
                     }
                 }
             }
@@ -280,7 +280,7 @@ namespace WiredPlayers.Server.Commands
         {
             player.SendChatMessage("Added hit.");
 
-            HitModel hit = new HitModel(123,23,2,"booone");
+            HitModel hit = new HitModel(123,23,2);
 
             player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).HitList.Add(hit);
         }

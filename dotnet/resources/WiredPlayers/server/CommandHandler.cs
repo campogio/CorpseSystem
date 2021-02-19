@@ -67,6 +67,9 @@ namespace WiredPlayers.Server
             NAPI.Command.Register(Type.GetType(ADMIN_NAMESPACE).GetMethod("RecoffCommand"), new RuntimeCommandInfo(ComRes.recoff));
             NAPI.Command.Register(Type.GetType(ADMIN_NAMESPACE).GetMethod("InfoCommand"), GetGreedyCommand(ComRes.info, HelpRes.info));
             NAPI.Command.Register(Type.GetType(ADMIN_NAMESPACE).GetMethod("PointsCommand"), GetGreedyCommand(ComRes.points, HelpRes.points));
+            NAPI.Command.Register(Type.GetType(ADMIN_NAMESPACE).GetMethod("RemoveCorpseCommand"), new RuntimeCommandInfo(ComRes.removecorpse));
+
+
 
             // Customization.cs class
             NAPI.Command.Register(Type.GetType(CUSTOMIZATION_NAMESPACE).GetMethod("ComplementCommand"), new RuntimeCommandInfo(ComRes.complement, HelpRes.complement));

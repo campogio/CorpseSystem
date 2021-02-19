@@ -30,12 +30,12 @@ namespace WiredPlayers.data.temporary
             Name = name;
             Model = NAPI.Object.CreateObject(1165866977, location, rotation);
             DeathTime = DateTime.Now;
-            DestroyTime = new Timer(DestroyCorpse, null, 30000, 30000);
+            DestroyTime = new Timer(DestroyCorpse, null, 600000, 600000);
         }
 
 
 
-        private void DestroyCorpse(object state)
+        public void DestroyCorpse(object state)
         {
             try
             {

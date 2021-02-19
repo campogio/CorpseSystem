@@ -534,4 +534,7 @@
   <data name="addhit" xml:space="preserve">
     <value>addhit</value>
   </data>
+  <data name="removecorpse" xml:space="preserve">
+    <value>removecorpse</value>
+  </data>
 </root>

@@ -997,6 +997,15 @@ namespace WiredPlayers.messages.commands {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to removecorpse.
+        /// </summary>
+        public static string removecorpse {
+            get {
+                return ResourceManager.GetString("removecorpse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to rent.
         /// </summary>
         public static string rent {

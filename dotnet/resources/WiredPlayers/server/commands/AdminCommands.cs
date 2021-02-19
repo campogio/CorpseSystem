@@ -25,6 +25,7 @@ using WiredPlayers.Buildings.Houses;
 using WiredPlayers.Buildings;
 using static WiredPlayers.Utility.Enumerators;
 using WiredPlayers.Data.Temporary;
+using WiredPlayers.data.temporary;
 
 namespace WiredPlayers.Server.Commands
 {
@@ -1844,5 +1845,27 @@ namespace WiredPlayers.Server.Commands
             // The action was not found
             player.SendChatMessage(Constants.COLOR_HELP + HelpRes.points);
         }
+
+        [Command]
+
+        public static void RemoveCorpseCommand(Player player)
+        {
+
+            //TODO : Switch to new Staff ranking system
+            if (player.GetExternalData<CharacterModel>((int)ExternalDataSlot.Database).AdminRank <= StaffRank.Administrator) return;
+
+            foreach (CorpseModel corpse in Emergency.CorpseList)
+            {
+                if (player.Position.DistanceToSquared2D(corpse.Location) < 5)
+                {
+                    corpse.DestroyCorpse(null);
+                }
+
+
+            }
+
+
+        }
+
     }
 }
