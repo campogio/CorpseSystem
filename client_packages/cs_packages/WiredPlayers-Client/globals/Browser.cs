@@ -40,6 +40,8 @@ namespace WiredPlayers_Client.globals
         public static void ExecuteFunction(string function, params object[] args)
         {
             // Call the function with the parameters
+            if (CustomBrowser == null) return;
+
             CustomBrowser.Call(function, args);
         }
 

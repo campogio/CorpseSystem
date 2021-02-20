@@ -171,6 +171,7 @@ namespace WiredPlayers.factions
                 // Create hitmodel from recieved hit TODO:translateboneidx to actual bone name
                 HitModel hit = new HitModel(weaponHash, boneIdx, damage);
 
+
                 // Add hit to player's hitlist
                 player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).HitList.Add(hit);
 

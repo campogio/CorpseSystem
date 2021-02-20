@@ -271,6 +271,12 @@ namespace WiredPlayers.Server.Commands
                     {
                         player.SendChatMessage($"Danno : {hit.Damage} |Arma : {hit.WeaponString} |BoneID : {hit.Boneidx} | BoneZone : {hit.BoneString}");
                     }
+
+                    //Pass info to corpseInspection.html
+
+                    player.TriggerEvent("showCorpse", NAPI.Util.ToJson(corpse));
+
+
                 }
             }
         }
@@ -278,11 +284,7 @@ namespace WiredPlayers.Server.Commands
         [Command]
         public static void AddHitCommand(Player player)
         {
-            player.SendChatMessage("Added hit.");
-
-            HitModel hit = new HitModel(123,23,2);
-
-            player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).HitList.Add(hit);
+            player.TriggerEvent("showCorpse");
         }
     }
 }

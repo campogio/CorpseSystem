@@ -9,6 +9,7 @@ namespace WiredPlayers.data.temporary
     {
         public ulong Weaponhash;
         public ulong Boneidx;
+        public int BoneIndex;
         public int Damage;
         public string BoneString;
         public string WeaponString;
@@ -69,9 +70,22 @@ namespace WiredPlayers.data.temporary
                 _ => "Unknown"
             };
 
+
             BoneString = boneidx switch
             {
                 0=> "torso",
+                140698833649666 => "left-leg",
+                140698833649664 => "left-leg",
+                140698833649668 => "right-leg",
+                140698833649672 => "torso",
+                140698833649674 => "torso",
+                140698833649682 => "right-arm",
+                140698833649680 => "right-arm",
+                140698833649678 => "left-arm",
+                140698833649676 => "left-arm",
+                140698833649684 => "head",
+                140698833649670 => "left-leg",
+                /*
                 1356 => "head",
                 2108 => "left-leg",
                 2992 => "right-arm",
@@ -169,6 +183,8 @@ namespace WiredPlayers.data.temporary
                 64729 => "left-leg",
                 65068 => "head",
                 65245 => "left-leg",
+
+                */
 
                 _ => "torso"
             };

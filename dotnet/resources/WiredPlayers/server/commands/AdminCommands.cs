@@ -1850,19 +1850,29 @@ namespace WiredPlayers.Server.Commands
 
         public static void RemoveCorpseCommand(Player player)
         {
-
-            //TODO : Switch to new Staff ranking system
-            if (player.GetExternalData<CharacterModel>((int)ExternalDataSlot.Database).AdminRank <= StaffRank.Administrator) return;
-
-            foreach (CorpseModel corpse in Emergency.CorpseList)
+            try
             {
-                if (player.Position.DistanceToSquared2D(corpse.Location) < 5)
+
+                //TODO : Switch to new Staff ranking system
+                //if (player.GetExternalData<CharacterModel>((int)ExternalDataSlot.Database).AdminRank < StaffRank.Administrator) return;
+
+
+
+                foreach (CorpseModel corpse in Emergency.CorpseList)
                 {
-                    corpse.DestroyCorpse(null);
+                    if (player.Position.DistanceToSquared2D(corpse.Location) < 5)
+                    {
+                        corpse.DestroyCorpse(corpse);
+                    }
+
+
                 }
-
-
             }
+            catch(Exception e)
+            {
+                NAPI.Util.ConsoleOutput(e.StackTrace);
+            }
+
 
 
         }
