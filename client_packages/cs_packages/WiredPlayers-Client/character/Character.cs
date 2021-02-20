@@ -58,7 +58,6 @@ namespace WiredPlayers_Client.character
                 if (targetEntity is Player player)
                 {
 
-
                     Events.CallRemote("onPlayerDamage", sourcePlayer.RemoteId, sourceEntity.RemoteId, damage, boneIdx ,weaponHash);
 
                     

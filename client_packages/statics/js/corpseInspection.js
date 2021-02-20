@@ -99,6 +99,8 @@ function getCorpseInfo(corpse) {
     var corpse = JSON.parse(corpse);
 
 
+    console.log(corpse.HitList.length);
+
     // Dead character's name
     document.getElementById('corpseName').innerHTML = corpse.Name;
     
@@ -124,10 +126,10 @@ function getCorpseInfo(corpse) {
             }
 
             // Put the hits in the list (append if hit already exists)
-            let newContent = '<b>' + italianizeZone(corpse.hitList[i].BoneString) + ' - ' + hits + ' </b> ' + (hits > 1 ? 'colpi' : 'colpo') + ' di <b>' + corpse.hitList[i].WeaponString + '</b>';
-            if (elaboratedHits[corpse.hitList[i].zone]) {
-                elaboratedHits[corpse.hitList[i].zone] = elaboratedHits[corpse.hitList[i].zone] + '<br/>' + newContent;
-            } else elaboratedHits[corpse.hitList[i].zone] = newContent;
+            let newContent = '<b>' + italianizeZone(corpse.HitList[i].BoneString) + ' - ' + hits + ' </b> ' + (hits > 1 ? 'colpi' : 'colpo') + ' di <b>' + corpse.HitList[i].WeaponString + '</b>';
+            if (elaboratedHits[corpse.HitList[i].BoneString]) {
+                elaboratedHits[corpse.HitList[i].BoneString] = elaboratedHits[corpse.HitList[i].BoneString] + '<br/>' + newContent;
+            } else elaboratedHits[corpse.HitList[i].BoneString] = newContent;
         }
     }
 }
