@@ -211,6 +211,8 @@ namespace WiredPlayers.Server.Commands
                 }
                 */
 
+                // trigger event to drop corpse if player was carrying one
+
                 // Get player position to place corpse
 
                 Vector3 corpsePos = player.Position;
@@ -320,7 +322,7 @@ namespace WiredPlayers.Server.Commands
                     {
                         player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse = closestCorpse;
                         closestCorpse.MovingCorpse();
-                        player.SendChatMessage($"You are now Carrying {player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse.Name}'s corpse.");
+                        player.SendChatMessage($"You are now carrying {player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse.Name}'s corpse.");
                     }
                     else
                     {

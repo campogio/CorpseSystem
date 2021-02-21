@@ -31,8 +31,8 @@ namespace WiredPlayers.data.temporary
             Name = name;
             Model = NAPI.Object.CreateObject(1165866977, location, rotation);
             DeathTime = DateTime.Now;
-            DestroyTime = new Timer(DestroyCorpse, null, 60000, 60000);
-            ExamineLabel= NAPI.TextLabel.CreateTextLabel("/examine",new Vector3(this.Location.X,this.Location.Y,this.Location.Z+.5f), 5.0f, 0.75f, 4, new Color(255, 255, 255));
+            DestroyTime = new Timer(DestroyCorpse, null, 6000000, 6000000);
+            ExamineLabel= NAPI.TextLabel.CreateTextLabel("/esamina",new Vector3(this.Location.X,this.Location.Y,this.Location.Z+.5f), 5.0f, 0.75f, 4, new Color(255, 255, 255));
         }
 
 
@@ -62,7 +62,7 @@ namespace WiredPlayers.data.temporary
             // Delete all visual components related to the corpse while it'se being moved.
             try
             {
-                NAPI.World.DeleteWorldProp(1165866977, this.Location, .5f);
+                this.Model.Delete();
                 this.ExamineLabel.Text = "";
                 this.Location = null;
             }catch(Exception e)
@@ -80,7 +80,7 @@ namespace WiredPlayers.data.temporary
                     this.Location = position;
                     
                     this.ExamineLabel.Position = new Vector3(this.Location.X, this.Location.Y, this.Location.Z + 1f);
-                    this.ExamineLabel.Text = "/examine";
+                    this.ExamineLabel.Text = "/esamina";
                     this.Model = NAPI.Object.CreateObject(1165866977, new Vector3(this.Location.X, this.Location.Y, this.Location.Z), this.Rotation); ;
                 }
                 else

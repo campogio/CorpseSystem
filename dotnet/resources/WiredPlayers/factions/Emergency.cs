@@ -160,6 +160,22 @@ namespace WiredPlayers.factions
 
             // Set the player into dead state
             player.TriggerEvent("togglePlayerDead", true);
+            // Drop corpse if carrying one
+            player.TriggerEvent("returnGroundPos", player.Position.X, player.Position.Y, player.Position.Z);
+        }
+
+        internal static void OnPlayerDisconnected(Player player)
+        {
+
+            if(player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse != null)
+            {
+
+                player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse.MoveCorpse(new Vector3(player.Position.X, player.Position.Y, player.Position.Z), player);
+
+                player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse = null;
+
+            }
+
         }
 
         [RemoteEvent("AddToHitList")]
@@ -188,14 +204,22 @@ namespace WiredPlayers.factions
 
         public void PlaceCorpseEvent(Player player,float x,float y,float z)
         {
+
+            
+
             try
             {
 
-                Vector3 pos = new Vector3(x, y, z);
+                if (player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse != null)
+                {
+                    Vector3 pos = new Vector3(x, y, z);
 
-                player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse.MoveCorpse(pos,player);
+                    player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse.MoveCorpse(pos, player);
 
-                player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse = null;
+                    player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse = null;
+
+                }
+                    
             }
             catch (Exception e)
             {

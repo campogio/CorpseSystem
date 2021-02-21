@@ -73,7 +73,7 @@ namespace WiredPlayers_Client.character
             String corpse = args[0].ToString();
 
             Browser.CreateBrowser("corpseInspection.html","destroyBrowser", "getCorpseInfo", corpse);
-            // Browser.ExecuteFunction("getCorpseInfo", corpse);
+
         }
 
         private void OnIncomingDamageEvent(Player sourcePlayer, Entity sourceEntity, Entity targetEntity, ulong weaponHash, ulong boneIdx, int damage, Events.CancelEventArgs cancel)

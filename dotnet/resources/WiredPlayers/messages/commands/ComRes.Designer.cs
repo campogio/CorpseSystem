@@ -403,11 +403,11 @@ namespace WiredPlayers.messages.commands {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to examine.
+        ///   Looks up a localized string similar to esamina.
         /// </summary>
-        public static string examine {
+        public static string esamina {
             get {
-                return ResourceManager.GetString("examine", resourceCulture);
+                return ResourceManager.GetString("esamina", resourceCulture);
             }
         }
         
