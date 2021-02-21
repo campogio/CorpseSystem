@@ -531,8 +531,8 @@
   <data name="examine" xml:space="preserve">
     <value>examine</value>
   </data>
-  <data name="addhit" xml:space="preserve">
-    <value>addhit</value>
+  <data name="carrycorpse" xml:space="preserve">
+    <value>carrycorpse</value>
   </data>
   <data name="removecorpse" xml:space="preserve">
     <value>removecorpse</value>

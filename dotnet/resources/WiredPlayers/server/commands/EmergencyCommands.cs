@@ -282,9 +282,62 @@ namespace WiredPlayers.Server.Commands
         }
 
         [Command]
-        public static void AddHitCommand(Player player)
+        public static void CarryCorpseCommand(Player player)
         {
-            player.TriggerEvent("showCorpse");
+
+            try
+            {
+                //check if player is already carrying corpse,drop current corpse, if not, take closest corpse and carry it
+                if (player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse != null)
+                {
+                    player.SendChatMessage($"You stopped carrying {player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse.Name}'s corpse.");
+
+                    player.TriggerEvent("returnGroundPos",player.Position.X, player.Position.Y,player.Position.Z);
+                    
+                }
+                else
+                {
+
+                    //get corpse closest to player, and assign it for carrying
+                    CorpseModel closestCorpse = null;
+                    float closestDistance = 5;
+                    float newDistance;
+
+                    foreach (CorpseModel corpse in Emergency.CorpseList)
+                    {
+
+                        newDistance = player.Position.DistanceToSquared2D(corpse.Location);
+                        if (newDistance < closestDistance)
+                        {
+                            closestDistance = newDistance;
+                            closestCorpse = corpse;
+                        }
+
+                    }
+
+                    //get corpse in temporary variable and off the ground if it exists, else say there's no corpses in range
+                    if (closestCorpse != null)
+                    {
+                        player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse = closestCorpse;
+                        closestCorpse.MovingCorpse();
+                        player.SendChatMessage($"You are now Carrying {player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse.Name}'s corpse.");
+                    }
+                    else
+                    {
+                        player.SendChatMessage("There are no corpses in range.");
+                    }
+                }
+
+            }
+            catch (Exception e)
+            {
+                NAPI.Util.ConsoleOutput(e.StackTrace);
+            }
+            
+
+
         }
+
     }
-}
+    }
+

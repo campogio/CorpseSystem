@@ -184,5 +184,24 @@ namespace WiredPlayers.factions
 
         }
 
+        [RemoteEvent("placeCorpse")]
+
+        public void PlaceCorpseEvent(Player player,float x,float y,float z)
+        {
+            try
+            {
+
+                Vector3 pos = new Vector3(x, y, z);
+
+                player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse.MoveCorpse(pos,player);
+
+                player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse = null;
+            }
+            catch (Exception e)
+            {
+                NAPI.Util.ConsoleOutput(e.StackTrace);
+            }
+        }
+
     }
 }

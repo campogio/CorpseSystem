@@ -61,6 +61,8 @@ namespace WiredPlayers.Data.Temporary
         public bool TaxiPath { get; set; }
         public ColShape EnteredColShape { get; set; }
         public List<HitModel> HitList { get; set; }
+        public bool isCarryingCorpse { get; set; }
+        public CorpseModel CarriedCorpse { get; set; }
 
         public PlayerTemporaryModel()
         {

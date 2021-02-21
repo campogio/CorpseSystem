@@ -37,8 +37,34 @@ namespace WiredPlayers_Client.character
             Events.Add("cancelCharacterCreation", CancelCharacterCreationEvent);
             Events.Add("characterCreatedSuccessfully", CharacterCreatedSuccessfullyEvent);
             Events.Add("showCorpse",ShowCorpseEvent);
+            Events.Add("returnGroundPos", ReturnGroundPosEvent);
 
             Events.OnIncomingDamage += OnIncomingDamageEvent;
+
+        }
+
+        private void ReturnGroundPosEvent(object[] args)
+        {
+
+            string x = args[0].ToString();
+            string y = args[1].ToString();
+            string z = args[2].ToString();
+
+            float xx = float.Parse(x);
+            float yy = float.Parse(y);
+            float zz = float.Parse(z);
+
+
+            int shapetest = RAGE.Game.Shapetest.StartShapeTestRay(xx,yy,zz,xx,yy,zz-200,1,0,0);
+            int hit = -1;
+            int entityHit = -1;
+            Vector3 hitCoords= new Vector3();
+            Vector3 surfaceNormal = new Vector3();
+            int result = RAGE.Game.Shapetest.GetShapeTestResult(shapetest,ref hit,hitCoords,surfaceNormal,ref entityHit);
+
+            RAGE.Ui.Console.Log(ConsoleVerbosity.Info, $"{hitCoords}", true);
+
+            Events.CallRemote("placeCorpse",hitCoords.X,hitCoords.Y,hitCoords.Z);
 
         }
 

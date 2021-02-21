@@ -74,7 +74,12 @@ namespace WiredPlayers.data.temporary
             {
                 0=> "torso",
 
+
+                //values for mp_f_freemode_01
                 140698833649684 => "head",
+
+
+                //values for mp_m_freemode_01
                 140694538682388 => "head",
 
                 140694538682380 => "left-arm",

@@ -16,6 +16,7 @@ namespace WiredPlayers.data.temporary
         public GTANetworkAPI.Object Model { get; set; }
         public DateTime DeathTime { get; set; }
         private Timer DestroyTime { get; set; }
+        public TextLabel ExamineLabel { get; set; }
 
 
         public CorpseModel(List<HitModel> hitList,Vector3 location,Vector3 rotation,String name) 
@@ -30,7 +31,8 @@ namespace WiredPlayers.data.temporary
             Name = name;
             Model = NAPI.Object.CreateObject(1165866977, location, rotation);
             DeathTime = DateTime.Now;
-            DestroyTime = new Timer(DestroyCorpse, null, 600000, 600000);
+            DestroyTime = new Timer(DestroyCorpse, null, 60000, 60000);
+            ExamineLabel= NAPI.TextLabel.CreateTextLabel("/examine",new Vector3(this.Location.X,this.Location.Y,this.Location.Z+.5f), 5.0f, 0.75f, 4, new Color(255, 255, 255));
         }
 
 
@@ -42,13 +44,55 @@ namespace WiredPlayers.data.temporary
                 NAPI.Task.Run(() =>
                 {
                     this.Model.Delete();
+                    this.ExamineLabel.Delete();
                 });
                 this.DestroyTime.Dispose();
+                this.HitList.Clear();
+                
                 Emergency.CorpseList.Remove(this);
             }catch(Exception e)
             {
                 NAPI.Util.ConsoleOutput(e.StackTrace);
             }
+        }
+
+        public void MovingCorpse()
+        {
+
+            // Delete all visual components related to the corpse while it'se being moved.
+            try
+            {
+                NAPI.World.DeleteWorldProp(1165866977, this.Location, .5f);
+                this.ExamineLabel.Text = "";
+                this.Location = null;
+            }catch(Exception e)
+            {
+                NAPI.Util.ConsoleOutput(e.StackTrace);
+            }
+        }
+
+        public void MoveCorpse(Vector3 position,Player player)
+        {
+            try
+            {
+                if (this.DeathTime.AddMinutes(1).CompareTo(DateTime.Now) > 0)
+                {
+                    this.Location = position;
+                    
+                    this.ExamineLabel.Position = new Vector3(this.Location.X, this.Location.Y, this.Location.Z + 1f);
+                    this.ExamineLabel.Text = "/examine";
+                    this.Model = NAPI.Object.CreateObject(1165866977, new Vector3(this.Location.X, this.Location.Y, this.Location.Z), this.Rotation); ;
+                }
+                else
+                {
+                    player.SendChatMessage("The corpse has decomposed.");
+                }
+            }
+            catch(Exception e)
+            {
+                NAPI.Util.ConsoleOutput(e.StackTrace);
+            }
+            
         }
     }
 }

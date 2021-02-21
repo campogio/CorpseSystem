@@ -115,15 +115,6 @@ namespace WiredPlayers.messages.commands {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to addhit.
-        /// </summary>
-        public static string addhit {
-            get {
-                return ResourceManager.GetString("addhit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to admin.
         /// </summary>
         public static string admin {
@@ -210,6 +201,15 @@ namespace WiredPlayers.messages.commands {
         public static string cancel {
             get {
                 return ResourceManager.GetString("cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to carrycorpse.
+        /// </summary>
+        public static string carrycorpse {
+            get {
+                return ResourceManager.GetString("carrycorpse", resourceCulture);
             }
         }
         
