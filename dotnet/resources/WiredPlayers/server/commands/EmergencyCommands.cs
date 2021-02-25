@@ -266,9 +266,8 @@ namespace WiredPlayers.Server.Commands
             {
                 if (player.Position.DistanceToSquared2D(corpse.Location)<5)
                 {
-                    player.SendChatMessage(corpse.Name);
-                    player.SendChatMessage($"{corpse.HitList.Count}");
 
+                    //TODO: Remove after testing is done
                     foreach (HitModel hit in corpse.HitList)
                     {
                         player.SendChatMessage($"Danno : {hit.Damage} |Arma : {hit.WeaponString} |BoneID : {hit.Boneidx} | BoneZone : {hit.BoneString}");
@@ -292,7 +291,7 @@ namespace WiredPlayers.Server.Commands
                 //check if player is already carrying corpse,drop current corpse, if not, take closest corpse and carry it
                 if (player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse != null)
                 {
-                    player.SendChatMessage($"You stopped carrying {player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse.Name}'s corpse.");
+                    player.SendChatMessage($"Hai lasciato il corpo di {player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse.Name}.");
 
                     player.TriggerEvent("returnGroundPos",player.Position.X, player.Position.Y,player.Position.Z);
                     
@@ -322,11 +321,11 @@ namespace WiredPlayers.Server.Commands
                     {
                         player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse = closestCorpse;
                         closestCorpse.MovingCorpse();
-                        player.SendChatMessage($"You are now carrying {player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse.Name}'s corpse.");
+                        player.SendChatMessage($"Stai trasportando il corpo di {player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse.Name}.");
                     }
                     else
                     {
-                        player.SendChatMessage("There are no corpses in range.");
+                        player.SendChatMessage("Non ci sono cadaveri vicino a te.");
                     }
                 }
 
@@ -338,6 +337,49 @@ namespace WiredPlayers.Server.Commands
             
 
 
+        }
+
+        [Command]
+
+        public static void FireCorpseCommand(Player player)
+        {
+            try
+            {
+
+                //get corpse closest to player, and assign it for burning
+                CorpseModel closestCorpse = null;
+                float closestDistance = 5;
+                float newDistance;
+
+                foreach (CorpseModel corpse in Emergency.CorpseList)
+                {
+
+                    newDistance = player.Position.DistanceToSquared2D(corpse.Location);
+                    if (newDistance < closestDistance)
+                    {
+                        closestDistance = newDistance;
+                        closestCorpse = corpse;
+                    }
+
+                }
+
+                if (closestCorpse != null)
+                {
+
+                    //TODO: Add check for gas tank
+                    closestCorpse.FireCorpse(player);
+                }
+                else
+                {
+                    player.SendChatMessage("Non ci sono cadaveri vicino a te.");
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                NAPI.Util.ConsoleOutput(e.StackTrace);
+            }
         }
 
     }

@@ -16,6 +16,8 @@ namespace WiredPlayers.data.temporary
         public GTANetworkAPI.Object Model { get; set; }
         public DateTime DeathTime { get; set; }
         private Timer DestroyTime { get; set; }
+        private Timer FireTime { get; set; }
+
         public TextLabel ExamineLabel { get; set; }
 
 
@@ -35,6 +37,13 @@ namespace WiredPlayers.data.temporary
             ExamineLabel= NAPI.TextLabel.CreateTextLabel("/esamina",new Vector3(this.Location.X,this.Location.Y,this.Location.Z+.5f), 5.0f, 0.75f, 4, new Color(255, 255, 255));
         }
 
+        public void FireCorpse(Player player)
+        {
+            player.SendChatMessage("Questo cadavere verrà distrutto tra 10 minuti.");
+
+            FireTime = new Timer(DestroyCorpse, null, 600000, 600000);
+        }
+
 
 
         public void DestroyCorpse(object state)
@@ -47,6 +56,7 @@ namespace WiredPlayers.data.temporary
                     this.ExamineLabel.Delete();
                 });
                 this.DestroyTime.Dispose();
+                this.FireTime.Dispose();
                 this.HitList.Clear();
                 
                 Emergency.CorpseList.Remove(this);

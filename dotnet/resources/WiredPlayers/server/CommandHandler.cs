@@ -67,7 +67,7 @@ namespace WiredPlayers.Server
             NAPI.Command.Register(Type.GetType(ADMIN_NAMESPACE).GetMethod("RecoffCommand"), new RuntimeCommandInfo(ComRes.recoff));
             NAPI.Command.Register(Type.GetType(ADMIN_NAMESPACE).GetMethod("InfoCommand"), GetGreedyCommand(ComRes.info, HelpRes.info));
             NAPI.Command.Register(Type.GetType(ADMIN_NAMESPACE).GetMethod("PointsCommand"), GetGreedyCommand(ComRes.points, HelpRes.points));
-            NAPI.Command.Register(Type.GetType(ADMIN_NAMESPACE).GetMethod("RemoveCorpseCommand"), new RuntimeCommandInfo(ComRes.removecorpse));
+            NAPI.Command.Register(Type.GetType(ADMIN_NAMESPACE).GetMethod("RemoveCorpseCommand"), new RuntimeCommandInfo(ComRes.rimuovicadavere));
 
 
 
@@ -112,7 +112,9 @@ namespace WiredPlayers.Server
             NAPI.Command.Register(Type.GetType(EMERGENCY_NAMESPACE).GetMethod("ExtractCommand"), GetGreedyCommand(ComRes.extract, HelpRes.extract));
             NAPI.Command.Register(Type.GetType(EMERGENCY_NAMESPACE).GetMethod("DieCommand"), new RuntimeCommandInfo(ComRes.die));
             NAPI.Command.Register(Type.GetType(EMERGENCY_NAMESPACE).GetMethod("ExamineCommand"), new RuntimeCommandInfo(ComRes.esamina));
-            NAPI.Command.Register(Type.GetType(EMERGENCY_NAMESPACE).GetMethod("CarryCorpseCommand"), new RuntimeCommandInfo(ComRes.carrycorpse));
+            NAPI.Command.Register(Type.GetType(EMERGENCY_NAMESPACE).GetMethod("CarryCorpseCommand"), new RuntimeCommandInfo(ComRes.trascinacadavere));
+            NAPI.Command.Register(Type.GetType(EMERGENCY_NAMESPACE).GetMethod("FireCorpseCommand"), new RuntimeCommandInfo(ComRes.incendiacadavere));
+
 
 
 

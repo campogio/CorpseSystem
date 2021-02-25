@@ -205,15 +205,6 @@ namespace WiredPlayers.messages.commands {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to carrycorpse.
-        /// </summary>
-        public static string carrycorpse {
-            get {
-                return ResourceManager.GetString("carrycorpse", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to character.
         /// </summary>
         public static string character {
@@ -610,6 +601,15 @@ namespace WiredPlayers.messages.commands {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to incendiacadavere.
+        /// </summary>
+        public static string incendiacadavere {
+            get {
+                return ResourceManager.GetString("incendiacadavere", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to incriminate.
         /// </summary>
         public static string incriminate {
@@ -997,15 +997,6 @@ namespace WiredPlayers.messages.commands {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to removecorpse.
-        /// </summary>
-        public static string removecorpse {
-            get {
-                return ResourceManager.GetString("removecorpse", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to rent.
         /// </summary>
         public static string rent {
@@ -1056,6 +1047,15 @@ namespace WiredPlayers.messages.commands {
         public static string revive {
             get {
                 return ResourceManager.GetString("revive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to rimuovicadavere.
+        /// </summary>
+        public static string rimuovicadavere {
+            get {
+                return ResourceManager.GetString("rimuovicadavere", resourceCulture);
             }
         }
         
@@ -1218,6 +1218,15 @@ namespace WiredPlayers.messages.commands {
         public static string tp {
             get {
                 return ResourceManager.GetString("tp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to trascinacadavere.
+        /// </summary>
+        public static string trascinacadavere {
+            get {
+                return ResourceManager.GetString("trascinacadavere", resourceCulture);
             }
         }
         

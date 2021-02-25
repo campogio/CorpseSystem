@@ -531,10 +531,13 @@
   <data name="esamina" xml:space="preserve">
     <value>esamina</value>
   </data>
-  <data name="carrycorpse" xml:space="preserve">
-    <value>carrycorpse</value>
+  <data name="trascinacadavere" xml:space="preserve">
+    <value>trascinacadavere</value>
   </data>
-  <data name="removecorpse" xml:space="preserve">
-    <value>removecorpse</value>
+  <data name="rimuovicadavere" xml:space="preserve">
+    <value>rimuovicadavere</value>
+  </data>
+  <data name="incendiacadavere" xml:space="preserve">
+    <value>incendiacadavere</value>
   </data>
 </root>
