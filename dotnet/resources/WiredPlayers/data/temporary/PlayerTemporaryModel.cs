@@ -1,4 +1,6 @@
 ﻿using GTANetworkAPI;
+using System.Collections.Generic;
+using WiredPlayers.data.temporary;
 using static WiredPlayers.Utility.Enumerators;
 
 namespace WiredPlayers.Data.Temporary
@@ -58,5 +60,13 @@ namespace WiredPlayers.Data.Temporary
         public float DrunkLevel { get; set; }
         public bool TaxiPath { get; set; }
         public ColShape EnteredColShape { get; set; }
+        public List<HitModel> HitList { get; set; }
+        public bool isCarryingCorpse { get; set; }
+        public CorpseModel CarriedCorpse { get; set; }
+
+        public PlayerTemporaryModel()
+        {
+            HitList = new List<HitModel>();
+        }
     }
 }

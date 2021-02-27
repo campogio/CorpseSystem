@@ -140,6 +140,7 @@ namespace WiredPlayers.Server
             Vehicles.OnPlayerDisconnected(player);
             Weapons.OnPlayerDisconnected(player);
             Drugs.OnPlayerDisconnected(player);
+            Emergency.OnPlayerDisconnected(player);
 
             // Save the character's data
             Character.SaveCharacterData(character);
