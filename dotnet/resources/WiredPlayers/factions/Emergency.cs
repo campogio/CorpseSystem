@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using WiredPlayers.Buildings;
 using WiredPlayers.character;
-using WiredPlayers.data.temporary;
 using WiredPlayers.Data.Persistent;
 using WiredPlayers.Data.Temporary;
 using WiredPlayers.messages.information;
@@ -15,7 +14,6 @@ namespace WiredPlayers.factions
     public class Emergency : Script
     {
         public static List<BloodModel> BloodList;
-        public static List<CorpseModel> CorpseList = new List<CorpseModel>();
 
         private void CreateEmergencyReport(DeathModel death)
         {
@@ -53,7 +51,7 @@ namespace WiredPlayers.factions
             foreach (BloodModel blood in BloodList)
             {
                 if (blood.Used) remaining--;
-                else remaining++;
+                else  remaining++;
             }
             return remaining;
         }
@@ -85,9 +83,9 @@ namespace WiredPlayers.factions
         }
 
         public static void TeleportPlayerToHospital(Player player)
-        {
+        {           
             NAPI.Player.SpawnPlayer(player, Coordinates.Hospital);
-
+            
             // Reset building variables
             BuildingHandler.RemovePlayerFromBuilding(player, Coordinates.Hospital, 0);
 
@@ -121,8 +119,8 @@ namespace WiredPlayers.factions
         [ServerEvent(Event.PlayerDeath)]
         public void PlayerDeathServerEvent(Player player, Player killer, uint weapon)
         {
-            if (IsPlayerDead(player)) return;
-
+            if(IsPlayerDead(player)) return;
+            
             DeathModel death = new DeathModel(player, killer, weapon);
 
             string deathPlace = string.Empty;
@@ -160,72 +158,6 @@ namespace WiredPlayers.factions
 
             // Set the player into dead state
             player.TriggerEvent("togglePlayerDead", true);
-            // Drop corpse if carrying one
-            player.TriggerEvent("returnGroundPos", player.Position.X, player.Position.Y, player.Position.Z);
         }
-
-        internal static void OnPlayerDisconnected(Player player)
-        {
-
-            if(player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse != null)
-            {
-
-                player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse.MoveCorpse(new Vector3(player.Position.X, player.Position.Y, player.Position.Z), player);
-
-                player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse = null;
-
-            }
-
-        }
-
-        [RemoteEvent("AddToHitList")]
-
-        public void AddToHitListEvent(Player player, ulong weaponHash, ulong boneIdx, int damage)
-        {
-            try
-            {
-                // Create hitmodel from recieved hit TODO:translateboneidx to actual bone name
-                HitModel hit = new HitModel(weaponHash, boneIdx, damage);
-
-
-                // Add hit to player's hitlist
-                player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).HitList.Add(hit);
-
-            }catch(Exception e)
-            {
-                NAPI.Util.ConsoleOutput(e.StackTrace);
-            }
-
-
-
-        }
-
-        [RemoteEvent("placeCorpse")]
-
-        public void PlaceCorpseEvent(Player player,float x,float y,float z)
-        {
-
-            
-
-            try
-            {
-
-                if (player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse != null)
-                {
-                    Vector3 pos = new Vector3(x, y, z);
-
-                    player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse.MoveCorpse(pos, player);
-
-                    player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse = null;
-
-                }
-                    
-            }
-            catch (Exception e)
-            {
-                NAPI.Util.ConsoleOutput(e.StackTrace);
-            }
-        }
-
     }
 }
