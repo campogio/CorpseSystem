@@ -115,6 +115,15 @@ namespace WiredPlayers.messages.commands {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to addpokersit.
+        /// </summary>
+        public static string addpokersit {
+            get {
+                return ResourceManager.GetString("addpokersit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to admin.
         /// </summary>
         public static string admin {
@@ -286,11 +295,29 @@ namespace WiredPlayers.messages.commands {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to createpokertable.
+        /// </summary>
+        public static string createpokertable {
+            get {
+                return ResourceManager.GetString("createpokertable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to cutinterview.
         /// </summary>
         public static string cut_interview {
             get {
                 return ResourceManager.GetString("cut_interview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to deletepokertable.
+        /// </summary>
+        public static string deletepokertable {
+            get {
+                return ResourceManager.GetString("deletepokertable", resourceCulture);
             }
         }
         
@@ -390,15 +417,6 @@ namespace WiredPlayers.messages.commands {
         public static string equipment {
             get {
                 return ResourceManager.GetString("equipment", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to esamina.
-        /// </summary>
-        public static string esamina {
-            get {
-                return ResourceManager.GetString("esamina", resourceCulture);
             }
         }
         
@@ -601,15 +619,6 @@ namespace WiredPlayers.messages.commands {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to incendiacadavere.
-        /// </summary>
-        public static string incendiacadavere {
-            get {
-                return ResourceManager.GetString("incendiacadavere", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to incriminate.
         /// </summary>
         public static string incriminate {
@@ -714,6 +723,15 @@ namespace WiredPlayers.messages.commands {
         public static string licenses {
             get {
                 return ResourceManager.GetString("licenses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to listpokertables.
+        /// </summary>
+        public static string listpokertables {
+            get {
+                return ResourceManager.GetString("listpokertables", resourceCulture);
             }
         }
         
@@ -880,6 +898,15 @@ namespace WiredPlayers.messages.commands {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to poker.
+        /// </summary>
+        public static string poker {
+            get {
+                return ResourceManager.GetString("poker", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to pos.
         /// </summary>
         public static string pos {
@@ -997,6 +1024,15 @@ namespace WiredPlayers.messages.commands {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to removepokersit.
+        /// </summary>
+        public static string removepokersit {
+            get {
+                return ResourceManager.GetString("removepokersit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to rent.
         /// </summary>
         public static string rent {
@@ -1047,15 +1083,6 @@ namespace WiredPlayers.messages.commands {
         public static string revive {
             get {
                 return ResourceManager.GetString("revive", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to rimuovicadavere.
-        /// </summary>
-        public static string rimuovicadavere {
-            get {
-                return ResourceManager.GetString("rimuovicadavere", resourceCulture);
             }
         }
         
@@ -1218,15 +1245,6 @@ namespace WiredPlayers.messages.commands {
         public static string tp {
             get {
                 return ResourceManager.GetString("tp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to trascinacadavere.
-        /// </summary>
-        public static string trascinacadavere {
-            get {
-                return ResourceManager.GetString("trascinacadavere", resourceCulture);
             }
         }
         
