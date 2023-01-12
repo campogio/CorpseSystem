@@ -3,6 +3,8 @@
 ### 0.Introduction
 This is the gamemode on which SVRP is based and contains a very general and draft structure of the current gamemode. You can use it to test your scripts in order to allow an easier embedding in the full gamemode. You can also fix some bugs on this gamemode if you need it and push these fixes for future development.
 
+(Added a corpse system that spawns a corpse on the player's death location)
+
 ### 1.Prerequisites
 
 * [RAGE Multiplayer](https://cdn.rage.mp/updater/prerelease/updater.exe) - The client to login into the server
