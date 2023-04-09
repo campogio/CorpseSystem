@@ -32,6 +32,7 @@ namespace WiredPlayers.Server
         private static readonly string PARKING_NAMESPACE = "WiredPlayers.Server.Commands.ParkingCommands";
         private static readonly string VEHICLES_NAMESPACE = "WiredPlayers.Server.Commands.VehiclesCommands";
         private static readonly string WEAPONS_NAMESPACE = "WiredPlayers.Server.Commands.WeaponsCommands";
+        private static readonly string POKER_NAMESPACE = "SouthValleyFive.Server.Commands.PokerCommands";
 
         public static void RegisterServerCommands()
         {
@@ -67,9 +68,6 @@ namespace WiredPlayers.Server
             NAPI.Command.Register(Type.GetType(ADMIN_NAMESPACE).GetMethod("RecoffCommand"), new RuntimeCommandInfo(ComRes.recoff));
             NAPI.Command.Register(Type.GetType(ADMIN_NAMESPACE).GetMethod("InfoCommand"), GetGreedyCommand(ComRes.info, HelpRes.info));
             NAPI.Command.Register(Type.GetType(ADMIN_NAMESPACE).GetMethod("PointsCommand"), GetGreedyCommand(ComRes.points, HelpRes.points));
-            NAPI.Command.Register(Type.GetType(ADMIN_NAMESPACE).GetMethod("RemoveCorpseCommand"), new RuntimeCommandInfo(ComRes.rimuovicadavere));
-
-
 
             // Customization.cs class
             NAPI.Command.Register(Type.GetType(CUSTOMIZATION_NAMESPACE).GetMethod("ComplementCommand"), new RuntimeCommandInfo(ComRes.complement, HelpRes.complement));
@@ -111,12 +109,6 @@ namespace WiredPlayers.Server
             NAPI.Command.Register(Type.GetType(EMERGENCY_NAMESPACE).GetMethod("ReanimateCommand"), GetGreedyCommand(ComRes.reanimate, HelpRes.reanimate));
             NAPI.Command.Register(Type.GetType(EMERGENCY_NAMESPACE).GetMethod("ExtractCommand"), GetGreedyCommand(ComRes.extract, HelpRes.extract));
             NAPI.Command.Register(Type.GetType(EMERGENCY_NAMESPACE).GetMethod("DieCommand"), new RuntimeCommandInfo(ComRes.die));
-            NAPI.Command.Register(Type.GetType(EMERGENCY_NAMESPACE).GetMethod("ExamineCommand"), new RuntimeCommandInfo(ComRes.esamina));
-            NAPI.Command.Register(Type.GetType(EMERGENCY_NAMESPACE).GetMethod("CarryCorpseCommand"), new RuntimeCommandInfo(ComRes.trascinacadavere));
-            NAPI.Command.Register(Type.GetType(EMERGENCY_NAMESPACE).GetMethod("FireCorpseCommand"), new RuntimeCommandInfo(ComRes.incendiacadavere));
-
-
-
 
             // Faction.cs class
             NAPI.Command.Register(Type.GetType(FACTION_NAMESPACE).GetMethod("FCommand"), GetGreedyCommand(ComRes.f, HelpRes.f));
@@ -227,6 +219,15 @@ namespace WiredPlayers.Server
 
             // Weapons.cs class
             NAPI.Command.Register(Type.GetType(WEAPONS_NAMESPACE).GetMethod("WeaponsEventCommand"), new RuntimeCommandInfo(ComRes.weapons_event));
+
+            // Poker commands
+            NAPI.Command.Register(Type.GetType(POKER_NAMESPACE).GetMethod("PokerCommand"), new RuntimeCommandInfo(ComRes.poker));
+            // Poker Admin commands
+            NAPI.Command.Register(Type.GetType(ADMIN_NAMESPACE).GetMethod("CreatePokerTableCommand"), new RuntimeCommandInfo(ComRes.createpokertable));
+            NAPI.Command.Register(Type.GetType(ADMIN_NAMESPACE).GetMethod("DeletePokerTableCommand"), new RuntimeCommandInfo(ComRes.deletepokertable));
+            NAPI.Command.Register(Type.GetType(ADMIN_NAMESPACE).GetMethod("AddPokerSitCommand"), new RuntimeCommandInfo(ComRes.addpokersit));
+            NAPI.Command.Register(Type.GetType(ADMIN_NAMESPACE).GetMethod("RemovePokerSitCommand"), new RuntimeCommandInfo(ComRes.removepokersit));
+            NAPI.Command.Register(Type.GetType(ADMIN_NAMESPACE).GetMethod("ListPokerTableCommand"), new RuntimeCommandInfo(ComRes.listpokertables));
         }
 
         private static RuntimeCommandInfo GetGreedyCommand(string name, string help)

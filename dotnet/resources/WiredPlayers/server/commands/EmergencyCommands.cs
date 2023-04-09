@@ -10,16 +10,11 @@ using WiredPlayers.chat;
 using static WiredPlayers.Utility.Enumerators;
 using WiredPlayers.Data.Temporary;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using WiredPlayers.data.temporary;
-using System;
 
 namespace WiredPlayers.Server.Commands
 {
     public static class EmergencyCommands
     {
-
-
         [Command]
         public static void HealCommand(Player player, string targetString)
         {
@@ -184,204 +179,43 @@ namespace WiredPlayers.Server.Commands
             player.SendChatMessage(Constants.COLOR_INFO + string.Format(InfoRes.blood_extracted, target.Name));
             target.SendChatMessage(Constants.COLOR_INFO + string.Format(InfoRes.blood_given, player.Name));
         }
-        
 
-            [Command]
+        [Command]
         public static void DieCommand(Player player)
         {
-            try
+            // Check if the player is dead
+            if (!player.HasData(EntityData.TimeHospitalRespawn))
             {
+                player.SendChatMessage(Constants.COLOR_ERROR + ErrRes.player_not_dead);
+                return;
+            }
 
-
-                // Check if the player is dead
-                if (!player.HasData(EntityData.TimeHospitalRespawn))
-                {
-                    player.SendChatMessage(Constants.COLOR_ERROR + ErrRes.player_not_dead);
-                    return;
-                }
-
-                int totalSeconds = UtilityFunctions.GetTotalSeconds();
-
-
-                /*
-                if (player.GetData<int>(EntityData.TimeHospitalRespawn) > totalSeconds)
-                {
-                    player.SendChatMessage(Constants.COLOR_INFO + InfoRes.death_time_not_passed);
-                    return;
-                }
-                */
-
-                // trigger event to drop corpse if player was carrying one
-
-                // Get player position to place corpse
-
-                Vector3 corpsePos = player.Position;
-                Vector3 corpseRot = player.Rotation;
-                // Get player hitlist
-
-                List<HitModel> hitList = player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).HitList;
-
-                // Generate corpse with player's info
-
-                CorpseModel corpse = new CorpseModel(player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).HitList, corpsePos, corpseRot, player.Name);
-
-                // Add new corpse to list of corpses
-
-                Emergency.CorpseList.Add(corpse);
-
-                // clear the player's hitlist
-                player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).HitList.Clear();
-
-                // Move player to the hospital
-                Emergency.TeleportPlayerToHospital(player);
-
-                // Get the report generated with the death
-                FactionWarningModel factionWarn = Faction.GetFactionWarnByTarget(player.Value, PlayerFactions.Emergency);
-
-                if (factionWarn != null)
-                {
-                    if (factionWarn.TakenBy >= 0)
-                    {
-                        // Tell the player who attended the report it's been canceled
-                        Player doctor = UtilityFunctions.GetPlayer(factionWarn.TakenBy);
-                        doctor.SendChatMessage(Constants.COLOR_INFO + InfoRes.faction_warn_canceled);
-                    }
-
-                    // Remove the report from the list
-                    Faction.factionWarningList.Remove(factionWarn);
-                }
-                //TODO: Getplayerpos, add corpse w/ attached HitList,empty player Hitlist
-
-            }catch(Exception e)
+            int totalSeconds = UtilityFunctions.GetTotalSeconds();
+            
+            if (player.GetData<int>(EntityData.TimeHospitalRespawn) > totalSeconds)
             {
-                NAPI.Util.ConsoleOutput(e.StackTrace);
+                player.SendChatMessage(Constants.COLOR_INFO + InfoRes.death_time_not_passed);
+                return;
             }
             
-        }
+            // Move player to the hospital
+            Emergency.TeleportPlayerToHospital(player);
 
-        [Command]
-        public static void ExamineCommand(Player player)
-        {
-            foreach(CorpseModel corpse in Emergency.CorpseList)
+            // Get the report generated with the death
+            FactionWarningModel factionWarn = Faction.GetFactionWarnByTarget(player.Value, PlayerFactions.Emergency);
+
+            if (factionWarn != null)
             {
-                if (player.Position.DistanceToSquared2D(corpse.Location)<5)
+                if (factionWarn.TakenBy >= 0)
                 {
-
-                    //TODO: Remove after testing is done
-                    foreach (HitModel hit in corpse.HitList)
-                    {
-                        player.SendChatMessage($"Danno : {hit.Damage} |Arma : {hit.WeaponString} |BoneID : {hit.Boneidx} | BoneZone : {hit.BoneString}");
-                    }
-
-                    //Pass info to corpseInspection.html
-
-                    player.TriggerEvent("showCorpse", NAPI.Util.ToJson(corpse));
-
-
+                    // Tell the player who attended the report it's been canceled
+                    Player doctor = UtilityFunctions.GetPlayer(factionWarn.TakenBy);
+                    doctor.SendChatMessage(Constants.COLOR_INFO + InfoRes.faction_warn_canceled);
                 }
+
+                // Remove the report from the list
+                Faction.factionWarningList.Remove(factionWarn);
             }
         }
-
-        [Command]
-        public static void CarryCorpseCommand(Player player)
-        {
-
-            try
-            {
-                //check if player is already carrying corpse,drop current corpse, if not, take closest corpse and carry it
-                if (player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse != null)
-                {
-                    player.SendChatMessage($"Hai lasciato il corpo di {player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse.Name}.");
-
-                    player.TriggerEvent("returnGroundPos",player.Position.X, player.Position.Y,player.Position.Z);
-                    
-                }
-                else
-                {
-
-                    //get corpse closest to player, and assign it for carrying
-                    CorpseModel closestCorpse = null;
-                    float closestDistance = 5;
-                    float newDistance;
-
-                    foreach (CorpseModel corpse in Emergency.CorpseList)
-                    {
-
-                        newDistance = player.Position.DistanceToSquared2D(corpse.Location);
-                        if (newDistance < closestDistance)
-                        {
-                            closestDistance = newDistance;
-                            closestCorpse = corpse;
-                        }
-
-                    }
-
-                    //get corpse in temporary variable and off the ground if it exists, else say there's no corpses in range
-                    if (closestCorpse != null)
-                    {
-                        player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse = closestCorpse;
-                        closestCorpse.MovingCorpse();
-                        player.SendChatMessage($"Stai trasportando il corpo di {player.GetExternalData<PlayerTemporaryModel>((int)ExternalDataSlot.Ingame).CarriedCorpse.Name}.");
-                    }
-                    else
-                    {
-                        player.SendChatMessage("Non ci sono cadaveri vicino a te.");
-                    }
-                }
-
-            }
-            catch (Exception e)
-            {
-                NAPI.Util.ConsoleOutput(e.StackTrace);
-            }
-            
-
-
-        }
-
-        [Command]
-
-        public static void FireCorpseCommand(Player player)
-        {
-            try
-            {
-
-                //get corpse closest to player, and assign it for burning
-                CorpseModel closestCorpse = null;
-                float closestDistance = 5;
-                float newDistance;
-
-                foreach (CorpseModel corpse in Emergency.CorpseList)
-                {
-
-                    newDistance = player.Position.DistanceToSquared2D(corpse.Location);
-                    if (newDistance < closestDistance)
-                    {
-                        closestDistance = newDistance;
-                        closestCorpse = corpse;
-                    }
-
-                }
-
-                if (closestCorpse != null)
-                {
-
-                    //TODO: Add check for gas tank
-                    closestCorpse.FireCorpse(player);
-                }
-                else
-                {
-                    player.SendChatMessage("Non ci sono cadaveri vicino a te.");
-                }
-
-
-            }
-            catch (Exception e)
-            {
-                NAPI.Util.ConsoleOutput(e.StackTrace);
-            }
-        }
-
     }
-    }
-
+}
